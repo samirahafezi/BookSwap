@@ -1,8 +1,9 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy]
+  before_action :ensure_correct_user, only: %i[ show edit update destroy ]
 
   def index
-    @books = Book.all
+    @books = Current.user.books
   end
 
   def show
@@ -10,11 +11,11 @@ class BooksController < ApplicationController
   end
 
   def new
-    @book = Book.new
+    @book = Current.user.books.build
   end
 
   def create
-    @book = Book.new(book_params)
+    @book = Current.user.books.build(book_params)
     if @book.save
       redirect_to @book
     else
@@ -45,7 +46,13 @@ class BooksController < ApplicationController
       @book = Book.find(params[:id])
     end
 
+    def ensure_correct_user
+      unless @book.user_id == Current.user.id
+        redirect_to books_path, alert: "You don't have permission to access this book."
+      end
+    end
+
     def book_params
-      params.expect(book: [ :title ])
+      params.require(:book).permit(:title)
     end
 end
