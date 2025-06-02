@@ -5,6 +5,9 @@ class SessionsController < ApplicationController
   def new
   end
 
+  # def show
+  # end
+
   def create
     if user = User.authenticate_by(params.permit(:email_address, :password))
       start_new_session_for user

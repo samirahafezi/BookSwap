@@ -1,0 +1,79 @@
+/* General body styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header bar styling */
+.header-bar {
+  background-color: #28a745; /* Green color */
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.header-bar .header-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.header-bar .header-link:hover {
+  text-decoration: underline;
+}
+
+/* Footer bar styling */
+.footer-bar {
+  background-color: #f9f9f9;
+  color: #333;
+  text-align: center;
+  padding: 1rem;
+  border-top: 2px solid #28a745; /* Green line separator */
+  margin-top: auto;
+}
+
+/* Main content styling */
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f4f4f9;
+}
+
+/* Login form styling */
+form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+form input[type="email"],
+form input[type="password"],
+form input[type="submit"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+form input[type="submit"] {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+  background-color: #218838;
+}

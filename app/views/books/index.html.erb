@@ -1,11 +1,15 @@
-<h1>My Books</h1>
+<h1>Books</h1>
 
 <%= link_to "New book", new_book_path %>
 
-<div id="books">
-  <% @books.each do |book| %>
-    <div>
-      <%= link_to book.title, book %>
-    </div>
-  <% end %>
-</div>
+<% if @books.any? %>
+  <div id="books">
+    <% @books.each do |book| %>
+      <div>
+        <%= link_to book.title, book %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>You have no books.</p>
+<% end %>

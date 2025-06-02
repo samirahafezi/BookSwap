@@ -1,13 +1,12 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[show edit update destroy]
-  before_action :authenticate_user!
-  before_action :ensure_owner!, only: %i[edit update destroy]
+  before_action :set_book, only: %i[ show edit update destroy]
 
   def index
-    @books = Current.user.books
+    @books = Book.all
   end
 
   def show
+    @book = Book.find(params[:id])
   end
 
   def new
@@ -15,7 +14,7 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Current.user.books.new(book_params)
+    @book = Book.new(book_params)
     if @book.save
       redirect_to @book
     else
@@ -24,9 +23,11 @@ class BooksController < ApplicationController
   end
 
   def edit
+    @book = Book.find(params[:id])
   end
 
   def update
+    @book = Book.find(params[:id])
     if @book.update(book_params)
       redirect_to @book
     else
@@ -45,14 +46,6 @@ class BooksController < ApplicationController
     end
 
     def book_params
-      params.require(:book).permit(:title)
-    end
-
-    def authenticate_user!
-      redirect_to new_session_path unless Current.user
-    end
-
-    def ensure_owner!
-      redirect_to books_path unless @book.user == Current.user
+      params.expect(book: [ :title ])
     end
 end

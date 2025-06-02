@@ -1,15 +1,5 @@
 <h1><%= @book.title %></h1>
 
-<p>
-  <% if @book.user %>
-    Owned by: <%= @book.user.email_address %>
-  <% else %>
-    No owner assigned
-  <% end %>
-</p>
-
 <%= link_to "Back", books_path %>
-<% if @book.user == Current.user %>
-  <%= link_to "Edit", edit_book_path(@book) %>
-  <%= button_to "Delete", @book, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
-<% end %>
+<%= link_to "Edit", edit_book_path(@book) %>
+<%= button_to "Delete", @book, method: :delete, data: { turbo_confirm: "Are you sure?" } %>

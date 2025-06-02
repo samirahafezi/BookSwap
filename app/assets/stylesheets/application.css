@@ -8,3 +8,43 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* Header styling */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+}
+
+.header-left .header-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.header-left .header-link:hover {
+  text-decoration: underline;
+}
+
+.header-right {
+  padding-right: 1rem; /* Add padding between the button and the right edge */
+}
+
+.header-right .logout-button {
+  background-color: transparent;
+  color: #28a745; /* Green text color */
+  border: 1px solid #28a745; /* Green border */
+  padding: 0.3rem 0.6rem; /* Smaller padding for a smaller button */
+  border-radius: 4px;
+  font-size: 0.9rem; /* Smaller font size */
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.header-right .logout-button:hover {
+  background-color: #28a745; /* Green background on hover */
+  color: white; /* White text on hover */
+}
