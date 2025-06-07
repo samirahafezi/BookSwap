@@ -9,42 +9,197 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
-/* Header styling */
-.header-bar {
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Layout */
+.layout-container {
   display: flex;
-  justify-content: space-between;
+  min-height: 100vh;
+}
+
+/* Header */
+.main-header {
+  background-color: #8A2BE2;
+  color: white;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 60px;
+  display: flex;
   align-items: center;
-  background-color: #333;
-  color: white;
-  padding: 1rem;
 }
 
-.header-left .header-link {
+.brand {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #9B4DEB;
+  width: 250px;
+  padding: 1rem 0;
+  color: white;
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
   color: white;
   text-decoration: none;
-  font-size: 1.2rem;
-}
-
-.header-left .header-link:hover {
-  text-decoration: underline;
-}
-
-.header-right {
-  padding-right: 1rem; /* Add padding between the button and the right edge */
-}
-
-.header-right .logout-button {
-  background-color: transparent;
-  color: #28a745; /* Green text color */
-  border: 1px solid #28a745; /* Green border */
-  padding: 0.3rem 0.6rem; /* Smaller padding for a smaller button */
-  border-radius: 4px;
-  font-size: 0.9rem; /* Smaller font size */
+  padding: 0.75rem 2rem;
+  display: block;
+  transition: background-color 0.2s;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 1rem;
   cursor: pointer;
-  text-decoration: none;
 }
 
-.header-right .logout-button:hover {
-  background-color: #28a745; /* Green background on hover */
-  color: white; /* White text on hover */
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-footer {
+  margin-top: auto;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  background-color: #f5f5f5;
+  margin-left: 250px;
+  margin-top: 60px;
+  padding: 2rem;
+  min-height: calc(100vh - 60px);
+}
+
+/* Auth pages (login/signup) */
+.auth-content {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-submit {
+  background-color: #8A2BE2;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.form-submit:hover {
+  background-color: #7B1FA2;
+}
+
+/* Book cards */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.book-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.book-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Buttons */
+.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button-primary {
+  background-color: #8A2BE2;
+  color: white;
+  border: none;
+}
+
+.button-primary:hover {
+  background-color: #7B1FA2;
+}
+
+.button-secondary {
+  background-color: transparent;
+  color: #8A2BE2;
+  border: 1px solid #8A2BE2;
+}
+
+.button-secondary:hover {
+  background-color: #8A2BE2;
+  color: white;
 }

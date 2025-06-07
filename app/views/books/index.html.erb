@@ -1,15 +1,20 @@
-<h1>Books</h1>
-
-<%= link_to "New book", new_book_path %>
+<h1>My Books</h1>
 
 <% if @books.any? %>
-  <div id="books">
+  <div class="books-grid">
     <% @books.each do |book| %>
-      <div>
-        <%= link_to book.title, book %>
+      <div class="book-card">
+        <h2 class="book-title"><%= book.title %></h2>
+        <div class="book-actions">
+          <%= link_to "View", book, class: "button button-secondary" %>
+          <%= link_to "Edit", edit_book_path(book), class: "button button-secondary" %>
+          <%= button_to "Delete", book, method: :delete, class: "button button-secondary", form: { class: "inline-button" }, data: { turbo_confirm: "Are you sure?" } %>
+        </div>
       </div>
     <% end %>
   </div>
 <% else %>
-  <p>You have no books.</p>
+  <p>You have no books yet.</p>
 <% end %>
+
+<%= link_to "Add New Book", new_book_path, class: "button button-primary" %>

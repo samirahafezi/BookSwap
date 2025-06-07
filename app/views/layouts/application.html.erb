@@ -16,27 +16,35 @@
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= stylesheet_link_tag "login", "data-turbo-track": "reload" %>
   </head>
 
   <body>
-    <header class="header-bar">
-      <div class="header-left">
-        <%= link_to "Home", root_path, class: "header-link" %>
-      </div>
-      <div class="header-right">
-        <% if authenticated? %>
-          <%= button_to "Log out", session_path, method: :delete, class: "logout-button" %>
-        <% end %>
-      </div>
-    </header>
+    <% if authenticated? %>
+      <header class="main-header">
+        <h1 class="brand">Book Swap</h1>
+      </header>
+      
+      <div class="layout-container">
+        <nav class="sidebar">
+          <div class="nav-links">
+            <%= link_to "Profile", "#", class: "nav-item" %>
+            <%= link_to "My Books", books_path, class: "nav-item" %>
+            <%= link_to "Borrowed Books", "#", class: "nav-item" %>
+            <%= link_to "Add Book", new_book_path, class: "nav-item" %>
+          </div>
+          <div class="nav-footer">
+            <%= button_to "Logout", session_path, method: :delete, class: "nav-item logout-button" %>
+          </div>
+        </nav>
 
-    <main class="main-content">
-      <%= yield %>
-    </main>
-
-    <footer class="footer-bar">
-      <p>&copy; <%= Time.now.year %> Book Swap</p>
-    </footer>
+        <main class="main-content">
+          <%= yield %>
+        </main>
+      </div>
+    <% else %>
+      <main class="auth-content">
+        <%= yield %>
+      </main>
+    <% end %>
   </body>
 </html>
