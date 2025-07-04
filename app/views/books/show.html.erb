@@ -1,6 +1,6 @@
 <div class="book-details">
   <h1 class="book-title"><%= @book.title %></h1>
-
+  <p><strong>Status:</strong> <%= @book.borrowable? ? "Borrowable" : "Not Borrowable" %></p>
   <div class="book-actions">
     <%= link_to "Back to Books", books_path, class: "button button-secondary" %>
     <%= link_to "Edit Book", edit_book_path(@book), class: "button button-secondary" %>
