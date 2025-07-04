@@ -92,6 +92,53 @@ body {
   margin-top: auto;
 }
 
+.nav-item.logout-button {
+  background: none !important;
+  color: white !important;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nav-item.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
+.sidebar form {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.sidebar form button,
+.sidebar form .nav-item.logout-button {
+  background: none !important;
+  color: white !important;
+  border: none !important;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+  display: block;
+}
+
+.sidebar form button:hover,
+.sidebar form .nav-item.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
 /* Main Content */
 .main-content {
   flex: 1;
