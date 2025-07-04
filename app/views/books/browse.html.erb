@@ -1,0 +1,18 @@
+<h1>Browse All Books</h1>
+
+<% if @books.any? %>
+  <div class="books-grid">
+    <% @books.each do |book| %>
+      <div class="book-card">
+        <h2 class="book-title"><%= book.title %></h2>
+        <p><strong>Owner:</strong> <%= book.user.email_address %></p>
+        <p><strong>Status:</strong> <%= book.borrowable? ? "Borrowable" : "Not Borrowable" %></p>
+        <div class="book-actions">
+          <%= link_to "View", book, class: "button button-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No borrowable books available from other users.</p>
+<% end %> 

@@ -41,6 +41,10 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
+  def browse
+    @books = Book.where(borrowable: true).where.not(user_id: Current.user.id)
+  end
+
   private
     def set_book
       @book = Book.find(params[:id])
