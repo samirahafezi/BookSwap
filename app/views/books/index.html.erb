@@ -5,6 +5,7 @@
     <% @books.each do |book| %>
       <div class="book-card">
         <h2 class="book-title"><%= book.title %></h2>
+        <p><strong>Status:</strong> <%= book.borrowable? ? "Borrowable" : "Not Borrowable" %></p>
         <div class="book-actions">
           <%= link_to "View", book, class: "button button-secondary" %>
           <%= link_to "Edit", edit_book_path(book), class: "button button-secondary" %>
