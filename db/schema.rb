@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_03_235909) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_10_004015) do
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -34,6 +34,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_235909) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.datetime "last_login"
+    t.integer "total_books"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
