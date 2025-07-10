@@ -1,0 +1,105 @@
+<h1>Profile</h1>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+
+<% if @user.errors.any? %>
+  <div class="alert alert-error">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this profile from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @user, url: profile_path, method: :patch, local: true do |form| %>
+  <div class="profile-info">
+    <div class="profile-row">
+      <span class="profile-label">First Name:</span>
+      <span class="profile-value"><%= form.text_field :first_name, placeholder: "Enter first name", class: "form-input" %></span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-label">Last Name:</span>
+      <span class="profile-value"><%= form.text_field :last_name, placeholder: "Enter last name", class: "form-input" %></span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-label">Phone Number:</span>
+      <span class="profile-value"><%= form.text_field :phone_number, placeholder: "Enter phone number", class: "form-input" %></span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-label">Email:</span>
+      <span class="profile-value"><%= @user.email_address %></span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-label">Last Login:</span>
+      <span class="profile-value"><%= @user.last_login ? @user.last_login.strftime("%B %d, %Y %I:%M %p") : "-" %></span>
+    </div>
+    <div class="profile-row">
+      <span class="profile-label">Total Books Added:</span>
+      <span class="profile-value"><%= @user.total_books || 0 %></span>
+    </div>
+    <div class="profile-row" style="border-bottom: none; justify-content: flex-end;">
+      <%= form.submit "Save Changes", class: "button button-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<style>
+.profile-info {
+  max-width: 500px;
+  margin: 2rem 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.07);
+  padding: 2rem;
+}
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+.profile-row:last-child {
+  border-bottom: none;
+}
+.profile-label {
+  font-weight: 500;
+  color: #666;
+  min-width: 120px;
+}
+.profile-value {
+  color: #222;
+  flex: 1;
+  text-align: right;
+}
+.form-input {
+  width: 70%;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.button.button-primary {
+  margin-top: 1rem;
+}
+.alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.alert-success {
+  background: #e6ffed;
+  color: #207245;
+  border: 1px solid #b7f5c2;
+}
+.alert-error {
+  background: #ffeaea;
+  color: #a94442;
+  border: 1px solid #f5b7b7;
+}
+</style> 
