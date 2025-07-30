@@ -1,0 +1,21 @@
+<h1>My Borrowed Books</h1>
+
+<% if @borrowed_books.any? %>
+  <div class="books-grid">
+    <% @borrowed_books.each do |book| %>
+      <div class="book-card">
+        <h2 class="book-title"><%= book.title %></h2>
+        <p><strong>Owner:</strong> <%= book.user.email_address %></p>
+        <p><strong>Borrowed On:</strong> <%= book.current_borrow.borrowed_at.strftime("%B %d, %Y") %></p>
+        <div class="book-actions">
+          <%= link_to "View", book, class: "button button-secondary" %>
+          <%= form_with url: return_book_path(book), method: :post, local: true, style: "display: inline;" do |form| %>
+            <%= form.submit "Return Book", class: "button button-primary", data: { turbo_confirm: "Are you sure you want to return this book?" } %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>You haven't borrowed any books yet.</p>
+<% end %> 

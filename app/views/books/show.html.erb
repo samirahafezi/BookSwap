@@ -1,9 +1,27 @@
 <div class="book-details">
   <h1 class="book-title"><%= @book.title %></h1>
   <p><strong>Status:</strong> <%= @book.borrowable? ? "Borrowable" : "Not Borrowable" %></p>
+  
+  <% if @book.currently_borrowed? %>
+    <p><strong>Currently Borrowed By:</strong> <%= @book.current_borrower.email_address %></p>
+    <p><strong>Borrowed On:</strong> <%= @book.current_borrow.borrowed_at.strftime("%B %d, %Y") %></p>
+    
+    <% if @book.current_borrower == Current.user %>
+      <%= form_with url: return_book_path(@book), method: :post, local: true, style: "display: inline;" do |form| %>
+        <%= form.submit "Return Book", class: "button button-primary", data: { turbo_confirm: "Are you sure you want to return this book?" } %>
+      <% end %>
+    <% end %>
+  <% elsif @book.available_for_borrowing? && @book.user != Current.user %>
+    <%= form_with url: borrow_book_path(@book), method: :post, local: true, style: "display: inline;" do |form| %>
+      <%= form.submit "Borrow Book", class: "button button-primary", data: { turbo_confirm: "Are you sure you want to borrow this book?" } %>
+    <% end %>
+  <% end %>
+  
   <div class="book-actions">
     <%= link_to "Back to Books", books_path, class: "button button-secondary" %>
-    <%= link_to "Edit Book", edit_book_path(@book), class: "button button-secondary" %>
-    <%= button_to "Delete Book", @book, method: :delete, class: "button button-secondary", data: { turbo_confirm: "Are you sure you want to delete this book?" } %>
+    <% if @book.user == Current.user %>
+      <%= link_to "Edit Book", edit_book_path(@book), class: "button button-secondary" %>
+      <%= button_to "Delete Book", @book, method: :delete, class: "button button-secondary", data: { turbo_confirm: "Are you sure you want to delete this book?" } %>
+    <% end %>
   </div>
 </div>

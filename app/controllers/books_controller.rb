@@ -42,7 +42,10 @@ class BooksController < ApplicationController
   end
 
   def browse
-    @books = Book.where(borrowable: true).where.not(user_id: Current.user.id)
+    @books = Book.where(borrowable: true)
+                 .where.not(user_id: Current.user.id)
+                 .joins("LEFT JOIN borrows ON books.id = borrows.book_id AND borrows.returned_at IS NULL")
+                 .where(borrows: { id: nil })
   end
 
   private
