@@ -374,7 +374,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
-  brakeman
+  brakeman (~> 7.1.0)
   capybara
   debug
   importmap-rails
