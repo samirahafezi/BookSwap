@@ -6,9 +6,20 @@
       <div class="book-card">
         <h2 class="book-title"><%= book.title %></h2>
         <p><strong>Owner:</strong> <%= book.user.email_address %></p>
-        <p><strong>Status:</strong> <%= book.borrowable? ? "Borrowable" : "Not Borrowable" %></p>
+        <p><strong>Status:</strong> 
+          <% if book.currently_borrowed? %>
+            Currently Borrowed
+          <% elsif book.available_for_borrowing? %>
+            Available for Borrowing
+          <% else %>
+            Not Borrowable
+          <% end %>
+        </p>
         <div class="book-actions">
           <%= link_to "View", book, class: "button button-secondary" %>
+          <% if book.available_for_borrowing? %>
+            <%= button_to "Borrow", borrow_book_path(book), method: :post, class: "button button-primary" %>
+          <% end %>
         </div>
       </div>
     <% end %>

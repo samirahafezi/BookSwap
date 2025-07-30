@@ -18,8 +18,14 @@ Rails.application.routes.draw do
     collection do
       get :browse
     end
+    member do
+      post :borrow, to: "borrows#borrow"
+      post :return, to: "borrows#return"
+    end
   end
 
   get "profile", to: "users#profile", as: :profile
   patch "profile", to: "users#update"
+
+  get "my-borrowed-books", to: "borrows#my_borrowed_books", as: :my_borrowed_books
 end
