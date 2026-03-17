@@ -3,10 +3,26 @@
 <% if @borrowed_books.any? %>
   <div class="books-grid">
     <% @borrowed_books.each do |book| %>
+      <% borrow = book.current_borrow %>
       <div class="book-card">
         <h2 class="book-title"><%= book.title %></h2>
         <p><strong>Owner:</strong> <%= book.user.email_address %></p>
-        <p><strong>Borrowed On:</strong> <%= book.current_borrow.borrowed_at.strftime("%B %d, %Y") %></p>
+        <% if borrow %>
+          <p><strong>Borrowed On:</strong> <%= borrow.borrowed_at.strftime("%B %d, %Y") %></p>
+          <p>
+            <strong>Due Date:</strong>
+            <% if borrow.due_at.present? %>
+              <%= borrow.due_at.strftime("%B %d, %Y") %>
+            <% else %>
+              No due date
+            <% end %>
+          </p>
+          <% if borrow.overdue? %>
+            <p><span class="status-badge status-overdue">Overdue</span></p>
+          <% elsif borrow.due_soon? %>
+            <p><span class="status-badge status-due-soon">Due soon</span></p>
+          <% end %>
+        <% end %>
         <div class="book-actions">
           <%= link_to "View", book, class: "button button-secondary" %>
           <%= form_with url: return_book_path(book), method: :post, local: true, style: "display: inline;" do |form| %>
