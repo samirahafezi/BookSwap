@@ -6,6 +6,9 @@
       <div class="book-card">
         <h2 class="book-title"><%= book.title %></h2>
         <p><strong>Owner:</strong> <%= book.user.email_address %></p>
+        <% if book.user.phone_number.present? %>
+          <p><strong>Owner Phone:</strong> <%= book.user.phone_number %></p>
+        <% end %>
         <p><strong>Status:</strong> 
           <% if book.currently_borrowed? %>
             Currently Borrowed
@@ -17,6 +20,7 @@
         </p>
         <div class="book-actions">
           <%= link_to "View", book, class: "button button-secondary" %>
+          <%= mail_to book.user.email_address, "Contact Owner", class: "button button-secondary" %>
           <% if book.available_for_borrowing? %>
             <%= button_to "Borrow", borrow_book_path(book), method: :post, class: "button button-primary" %>
           <% end %>

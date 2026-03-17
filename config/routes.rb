@@ -28,4 +28,6 @@ Rails.application.routes.draw do
   patch "profile", to: "users#update"
 
   get "my-borrowed-books", to: "borrows#my_borrowed_books", as: :my_borrowed_books
+  get "borrowing-history", to: "borrows#borrowing_history", as: :borrowing_history
+  get "my-books-borrowers", to: "borrows#my_books_borrowers", as: :my_books_borrowers
 end

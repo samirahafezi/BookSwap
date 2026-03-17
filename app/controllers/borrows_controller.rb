@@ -56,4 +56,15 @@ class BorrowsController < ApplicationController
   def my_borrowed_books
     @borrowed_books = Current.user.currently_borrowed_books
   end
+
+  def borrowing_history
+    @borrows = Current.user.borrows.includes(:book).order(borrowed_at: :desc)
+  end
+
+  def my_books_borrowers
+    @borrows = Borrow.joins(:book)
+                     .where(books: { user_id: Current.user.id })
+                     .includes(:book, :borrower)
+                     .order(borrowed_at: :desc)
+  end
 end
