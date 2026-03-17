@@ -28,6 +28,8 @@
       </div>
     <% end %>
   </div>
+  <%= paginate @books %>
 <% else %>
-  <p>No borrowable books available from other users.</p>
+  <p>No borrowable books available from other users right now.</p>
+  <p>Try again later, or add more of your own books so others can borrow from you.</p>
 <% end %> 

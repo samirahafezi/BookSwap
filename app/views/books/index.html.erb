@@ -14,8 +14,8 @@
       </div>
     <% end %>
   </div>
+  <%= paginate @books %>
 <% else %>
   <p>You have no books yet.</p>
+  <%= link_to "Add your first book", new_book_path, class: "button button-primary" %>
 <% end %>
-
-<%= link_to "Add New Book", new_book_path, class: "button button-primary" %>

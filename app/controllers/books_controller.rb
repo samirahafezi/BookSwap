@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   before_action :ensure_correct_user, only: %i[ show edit update destroy ]
 
   def index
-    @books = Current.user.books
+    @books = Current.user.books.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def show
@@ -42,10 +42,12 @@ class BooksController < ApplicationController
   end
 
   def browse
-    @books = Book.where(borrowable: true)
-                 .where.not(user_id: Current.user.id)
-                 .joins("LEFT JOIN borrows ON books.id = borrows.book_id AND borrows.returned_at IS NULL")
-                 .where(borrows: { id: nil })
+    scope = Book.where(borrowable: true)
+                .where.not(user_id: Current.user.id)
+                .joins("LEFT JOIN borrows ON books.id = borrows.book_id AND borrows.returned_at IS NULL")
+                .where(borrows: { id: nil })
+
+    @books = scope.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   private
