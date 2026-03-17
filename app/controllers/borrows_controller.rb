@@ -18,7 +18,8 @@ class BorrowsController < ApplicationController
     if @book.available_for_borrowing?
       @borrow = @book.borrows.build(
         borrower: Current.user,
-        borrowed_at: Time.current
+        borrowed_at: Time.current,
+        due_at: Time.current + Borrow::LOAN_PERIOD_DAYS.days
       )
 
       Rails.logger.info "Attempting to save borrow record"

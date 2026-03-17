@@ -1,0 +1,10 @@
+<p>Hi <%= @user.first_name || @user.email_address %>,</p>
+
+<p>The book "<strong><%= @book.title %></strong>" is now overdue.</p>
+
+<% if @borrow.due_at.present? %>
+  <p><strong>Due date:</strong> <%= @borrow.due_at.strftime("%B %d, %Y") %></p>
+<% end %>
+
+<p>Please return the book as soon as you can so others can borrow it too.</p>
+

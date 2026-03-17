@@ -1,0 +1,10 @@
+<p>Hi <%= @user.first_name || @user.email_address %>,</p>
+
+<p>This is a friendly reminder that the book "<strong><%= @book.title %></strong>" is due soon.</p>
+
+<% if @borrow.due_at.present? %>
+  <p><strong>Due date:</strong> <%= @borrow.due_at.strftime("%B %d, %Y") %></p>
+<% end %>
+
+<p>You can view your borrowed books in BookSwap to return it when you're ready.</p>
+
