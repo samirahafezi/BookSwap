@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "Book Swap" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="<%= pwa_manifest_path %>">
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function() {
-          navigator.serviceWorker.register("<%= pwa_service_worker_path %>");
-        });
-      }
-    </script>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body>
-    <% if authenticated? %>
-      <header class="main-header">
-        <h1 class="brand">Book Swap</h1>
-      </header>
-      
-      <div class="layout-container">
-        <nav class="sidebar">
-          <div class="nav-links">
-            <%= link_to "Profile", profile_path, class: "nav-item" %>
-            <%= link_to "My Books", books_path, class: "nav-item" %>
-            <%= link_to "Browse All Books", browse_books_path, class: "nav-item" %>
-            <%= link_to "Borrowed Books", my_borrowed_books_path, class: "nav-item" %>
-            <%= link_to "Borrowing History", borrowing_history_path, class: "nav-item" %>
-            <%= link_to "Who Borrowed My Books", my_books_borrowers_path, class: "nav-item" %>
-            <%= link_to "Add Book", new_book_path, class: "nav-item" %>
-          </div>
-          <div class="nav-footer">
-            <%= button_to "Logout", session_path, method: :delete, class: "nav-item logout-button" %>
-          </div>
-        </nav>
-
-        <main class="main-content">
-          <%= yield %>
-        </main>
-      </div>
-    <% else %>
-      <main class="auth-content">
-        <%= yield %>
-      </main>
-    <% end %>
-  </body>
+<head>
+  <title>BookSwap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/application.css">
+  <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
+  </script>
+</head>
+<body class="dark-mode">
+  <header>
+    <h1>BookSwap</h1>
+    <button onclick="toggleMenu()">☰</button>
+  </header>
+  <div id="container">
+    <aside id="sidebar" class="sidebar">
+      <!-- Sidebar content here -->
+    </aside>
+    <main>
+      <%= yield %>
+    </main>
+  </div>
+  <style>
+    body.dark-mode {
+      background-color: #121212;
+      color: white;
+    }
+    .sidebar {
+      width: 250px;
+      transition: all 0.3s;
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    .sidebar.active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 10px;
+      position: relative;
+    }
+    #container {
+      display: flex;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+    }
+  </style>
+</body>
 </html>
