@@ -1,0 +1,21 @@
+.dark-mode {
+  --primary-bg: #121212;
+  --primary-text: #E0E0E0;
+  --secondary-bg: #1E1E1E;
+  --secondary-text: #B0B0B0;
+  --highlight: #BB86FC;
+  --error: #CF6679;
+}
+
+/* Utility classes */
+.text-white {
+  color: var(--primary-text);
+}
+
+.bg-dark {
+  background-color: var(--primary-bg);
+}
+
+.hover-highlight:hover {
+  background-color: var(--highlight);
+}
