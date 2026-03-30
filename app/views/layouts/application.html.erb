@@ -1,56 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BookSwap</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/assets/application.css">
-  <script>
-    function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('active');
-    }
-  </script>
+  <title>BookSwap</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/script.js" defer></script>
 </head>
 <body class="dark-mode">
   <header>
-    <h1>BookSwap</h1>
-    <button onclick="toggleMenu()">☰</button>
+    <div class="hamburger-menu">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
   </header>
-  <div id="container">
-    <aside id="sidebar" class="sidebar">
-      <!-- Sidebar content here -->
-    </aside>
-    <main>
-      <%= yield %>
-    </main>
-  </div>
-  <style>
-    body.dark-mode {
-      background-color: #121212;
-      color: white;
-    }
-    .sidebar {
-      width: 250px;
-      transition: all 0.3s;
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-    .sidebar.active {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    header {
-      background: #1f1f1f;
-      padding: 10px;
-      position: relative;
-    }
-    #container {
-      display: flex;
-    }
-    main {
-      flex: 1;
-      padding: 20px;
-    }
-  </style>
+  <main>
+    <h1>Welcome to BookSwap</h1>
+    <!-- Main content goes here -->
+  </main>
+  <footer>
+    <p>&copy; 2026 BookSwap. All rights reserved.</p>
+  </footer>
 </body>
 </html>
