@@ -276,6 +276,76 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
+/* ===== Status Badges ===== */
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.status-overdue {
+  background-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+.status-due-soon {
+  background-color: #78350f;
+  color: #fcd34d;
+}
+
+.status-active {
+  background-color: #134e4a;
+  color: #6ee7b7;
+}
+
+/* ===== Genre / Condition Badges ===== */
+.genre-badge, .condition-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  background-color: var(--border);
+  color: var(--secondary-text);
+}
+
+/* ===== Star Rating ===== */
+.star-rating {
+  color: #f59e0b;
+  font-size: 0.95rem;
+}
+
+.rating-count {
+  color: var(--secondary-text);
+  font-size: 0.85rem;
+  margin-left: 0.25rem;
+}
+
+/* ===== Search / Filter Bar ===== */
+.search-filter-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.search-filter-bar form {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  max-width: 100%;
+}
+
+.search-filter-bar input[type="text"],
+.search-filter-bar select {
+  flex: 1;
+  min-width: 160px;
+}
+
 /* ===== Footer ===== */
 footer {
   text-align: center;

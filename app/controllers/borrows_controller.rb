@@ -47,7 +47,7 @@ class BorrowsController < ApplicationController
 
     if @borrow
       @borrow.update(returned_at: Time.current)
-      redirect_to book_path(@book), notice: "Book returned successfully!"
+      redirect_to new_borrow_rating_path(@borrow), notice: "Book returned! Leave a rating for the owner."
     else
       redirect_to book_path(@book), alert: "You haven't borrowed this book."
     end

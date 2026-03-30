@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_17_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_30_000002) do
   create_table "books", force: :cascade do |t|
+    t.string "author"
     t.boolean "borrowable"
+    t.string "condition"
     t.datetime "created_at", null: false
+    t.text "description"
+    t.string "genre"
     t.string "title"
     t.datetime "updated_at", null: false
     t.integer "user_id", default: 1, null: false
@@ -32,6 +36,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000000) do
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_borrows_on_book_id"
     t.index ["borrower_id"], name: "index_borrows_on_borrower_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer "borrow_id", null: false
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.integer "ratee_id", null: false
+    t.integer "rater_id", null: false
+    t.integer "stars", null: false
+    t.datetime "updated_at", null: false
+    t.index ["borrow_id"], name: "index_ratings_on_borrow_id", unique: true
+    t.index ["ratee_id"], name: "index_ratings_on_ratee_id"
+    t.index ["rater_id"], name: "index_ratings_on_rater_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -59,5 +76,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_000000) do
   add_foreign_key "books", "users"
   add_foreign_key "borrows", "books"
   add_foreign_key "borrows", "users", column: "borrower_id"
+  add_foreign_key "ratings", "borrows"
+  add_foreign_key "ratings", "users", column: "ratee_id"
+  add_foreign_key "ratings", "users", column: "rater_id"
   add_foreign_key "sessions", "users"
 end

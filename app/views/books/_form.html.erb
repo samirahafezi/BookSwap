@@ -1,8 +1,7 @@
 <%= form_with model: book do |form| %>
   <% if book.errors.any? %>
-    <div class="error-messages">
-      <h2><%= pluralize(book.errors.count, "error") %> prevented this book from being saved:</h2>
-      <ul>
+    <div class="alert">
+      <ul style="margin: 0; padding-left: 1.2rem;">
         <% book.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -12,17 +11,36 @@
 
   <div class="form-group">
     <%= form.label :title, class: "form-label" %>
-    <%= form.text_field :title, class: "form-input" %>
+    <%= form.text_field :title, placeholder: "Book title" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :borrowable, "Borrowable?", class: "form-label" %>
-    <%= form.check_box :borrowable %>
+    <%= form.label :author, class: "form-label" %>
+    <%= form.text_field :author, placeholder: "Author name" %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-group">
+    <%= form.label :genre, class: "form-label" %>
+    <%= form.select :genre, [["— Select genre —", nil]] + Book::GENRES, {}, {} %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :condition, class: "form-label" %>
+    <%= form.select :condition, [["— Select condition —", nil]] + Book::CONDITIONS, {}, {} %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, rows: 3, placeholder: "A short description (optional)" %>
+  </div>
+
+  <div class="form-group" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+    <%= form.check_box :borrowable %>
+    <%= form.label :borrowable, "Available to borrow", class: "form-label", style: "margin: 0;" %>
+  </div>
+
+  <div class="form-actions" style="margin-top: 0.25rem;">
     <%= form.submit class: "button button-primary" %>
     <%= link_to "Cancel", books_path, class: "button button-secondary" %>
   </div>
 <% end %>
-  

@@ -1,6 +1,7 @@
 class Borrow < ApplicationRecord
   belongs_to :book
   belongs_to :borrower, class_name: "User"
+  has_one :rating, dependent: :destroy
 
   LOAN_PERIOD_DAYS = 14
   DUE_SOON_WINDOW_DAYS = 2

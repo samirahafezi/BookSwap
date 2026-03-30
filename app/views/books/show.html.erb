@@ -1,15 +1,46 @@
-<div class="book-details">
+<div class="book-details card" style="max-width: 600px;">
   <h1 class="book-title"><%= @book.title %></h1>
-  <p><strong>Status:</strong> <%= @book.borrowable? ? "Borrowable" : "Not Borrowable" %></p>
-  <p><strong>Owner:</strong> <%= @book.user.email_address %></p>
-  <% if @book.user.phone_number.present? %>
-    <p><strong>Owner Phone:</strong> <%= @book.user.phone_number %></p>
+  <% if @book.author.present? %>
+    <p style="color: var(--secondary-text); margin-bottom: 0.75rem;">by <%= @book.author %></p>
   <% end %>
-  
+
+  <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
+    <% if @book.genre.present? %>
+      <span class="genre-badge"><%= @book.genre %></span>
+    <% end %>
+    <% if @book.condition.present? %>
+      <span class="condition-badge"><%= @book.condition %></span>
+    <% end %>
+  </div>
+
+  <% if @book.description.present? %>
+    <p style="margin-bottom: 1rem; color: var(--secondary-text);"><%= @book.description %></p>
+  <% end %>
+
+  <p>
+    <strong>Status:</strong>
+    <% if @book.borrowable? %>
+      <span class="status-badge status-active">Borrowable</span>
+    <% else %>
+      <span class="status-badge" style="background: var(--border); color: var(--secondary-text);">Not Borrowable</span>
+    <% end %>
+  </p>
+
+  <p style="margin-top: 0.5rem;">
+    <strong>Owner:</strong> <%= @book.user.first_name.present? ? "#{@book.user.first_name} #{@book.user.last_name}" : @book.user.email_address %>
+    <% avg = @book.user.average_rating %>
+    <% if avg %>
+      <span class="star-rating">★ <%= avg %></span>
+      <span class="rating-count">(<%= @book.user.ratings_received.count %>)</span>
+    <% end %>
+  </p>
+
+  <% if @book.user.phone_number.present? %>
+    <p><strong>Contact:</strong> <%= @book.user.phone_number %></p>
+  <% end %>
+
   <% if @book.currently_borrowed? %>
-    <p><strong>Currently Borrowed By:</strong> <%= @book.current_borrower.email_address %></p>
-    <p><strong>Borrowed On:</strong> <%= @book.current_borrow.borrowed_at.strftime("%B %d, %Y") %></p>
-    
+    <p style="margin-top: 0.5rem;"><strong>Borrowed On:</strong> <%= @book.current_borrow.borrowed_at.strftime("%B %d, %Y") %></p>
     <% if @book.current_borrower == Current.user %>
       <%= form_with url: return_book_path(@book), method: :post, local: true, style: "display: inline;" do |form| %>
         <%= form.submit "Return Book", class: "button button-primary", data: { turbo_confirm: "Are you sure you want to return this book?" } %>
@@ -20,13 +51,13 @@
       <%= form.submit "Borrow Book", class: "button button-primary", data: { turbo_confirm: "Are you sure you want to borrow this book?" } %>
     <% end %>
   <% end %>
-  
-  <div class="book-actions">
-    <%= link_to "Back to Books", books_path, class: "button button-secondary" %>
-    <%= mail_to @book.user.email_address, "Contact Owner", class: "button button-secondary" %>
+
+  <div class="book-actions" style="margin-top: 1rem;">
+    <%= link_to "Back", :back, class: "button button-secondary" %>
+    <%= mail_to @book.user.email_address, "Email Owner", class: "button button-secondary" %>
     <% if @book.user == Current.user %>
-      <%= link_to "Edit Book", edit_book_path(@book), class: "button button-secondary" %>
-      <%= button_to "Delete Book", @book, method: :delete, class: "button button-secondary", data: { turbo_confirm: "Are you sure you want to delete this book?" } %>
+      <%= link_to "Edit", edit_book_path(@book), class: "button button-secondary" %>
+      <%= button_to "Delete", @book, method: :delete, class: "button button-secondary", data: { turbo_confirm: "Are you sure you want to delete this book?" } %>
     <% end %>
   </div>
 </div>
