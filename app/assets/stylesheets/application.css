@@ -1,252 +1,33 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
-
-/* Reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* Dark mode styles */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  color: #333;
-  min-height: 100vh;
+    background-color: #121212;
+    color: #ffffff;
 }
 
-/* Layout */
-.layout-container {
-  display: flex;
-  min-height: 100vh;
+/* Teal accents */
+a {
+    color: #00796b;
 }
 
-/* Header */
-.main-header {
-  background-color: #8A2BE2;
-  color: white;
-  padding: 1rem 2rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  height: 60px;
-  display: flex;
-  align-items: center;
+/* Sleek layout */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.brand {
-  font-size: 1.5rem;
-  font-weight: 600;
+/* Hamburger menu styling */
+.hamburger {
+    display: none;
 }
 
-/* Sidebar */
-.sidebar {
-  background-color: #9B4DEB;
-  width: 250px;
-  padding: 1rem 0;
-  color: white;
-  position: fixed;
-  top: 60px;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.nav-item {
-  color: white;
-  text-decoration: none;
-  padding: 0.75rem 2rem;
-  display: block;
-  transition: background-color 0.2s;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.nav-footer {
-  margin-top: auto;
-}
-
-.nav-item.logout-button {
-  background: none !important;
-  color: white !important;
-  border: none;
-  width: 100%;
-  text-align: left;
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.nav-item.logout-button:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: white !important;
-}
-
-.sidebar form {
-  margin: 0;
-  padding: 0;
-  background: none;
-  border: none;
-}
-
-.sidebar form button,
-.sidebar form .nav-item.logout-button {
-  background: none !important;
-  color: white !important;
-  border: none !important;
-  width: 100%;
-  text-align: left;
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  box-shadow: none;
-  outline: none;
-  appearance: none;
-  display: block;
-}
-
-.sidebar form button:hover,
-.sidebar form .nav-item.logout-button:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: white !important;
-}
-
-/* Main Content */
-.main-content {
-  flex: 1;
-  background-color: #f5f5f5;
-  margin-left: 250px;
-  margin-top: 60px;
-  padding: 2rem;
-  min-height: calc(100vh - 60px);
-}
-
-/* Auth pages (login/signup) */
-.auth-content {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Forms */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.form-submit {
-  background-color: #8A2BE2;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
-}
-
-.form-submit:hover {
-  background-color: #7B1FA2;
-}
-
-/* Book cards */
-.books-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 1rem 0;
-}
-
-.book-card {
-  background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.book-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.book-actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-/* Buttons */
-.button {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.button-primary {
-  background-color: #8A2BE2;
-  color: white;
-  border: none;
-}
-
-.button-primary:hover {
-  background-color: #7B1FA2;
-}
-
-.button-secondary {
-  background-color: transparent;
-  color: #8A2BE2;
-  border: 1px solid #8A2BE2;
-}
-
-.button-secondary:hover {
-  background-color: #8A2BE2;
-  color: white;
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        font-size: 24px;
+        cursor: pointer;
+    }
 }
