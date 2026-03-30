@@ -47,6 +47,10 @@ class BooksController < ApplicationController
                 .joins("LEFT JOIN borrows ON books.id = borrows.book_id AND borrows.returned_at IS NULL")
                 .where(borrows: { id: nil })
 
+    scope = scope.search(params[:q]) if params[:q].present?
+    scope = scope.by_genre(params[:genre]) if params[:genre].present?
+
+    @genres = Book.where(borrowable: true).where.not(user_id: Current.user.id).distinct.pluck(:genre).compact.sort
     @books = scope.order(created_at: :desc).page(params[:page]).per(10)
   end
 
@@ -62,6 +66,6 @@ class BooksController < ApplicationController
     end
 
     def book_params
-      params.require(:book).permit(:title, :borrowable)
+      params.require(:book).permit(:title, :author, :genre, :condition, :description, :borrowable)
     end
 end

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
+  get "signup", to: "users#new", as: :signup
+  post "signup", to: "users#create"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -30,4 +32,8 @@ Rails.application.routes.draw do
   get "my-borrowed-books", to: "borrows#my_borrowed_books", as: :my_borrowed_books
   get "borrowing-history", to: "borrows#borrowing_history", as: :borrowing_history
   get "my-books-borrowers", to: "borrows#my_books_borrowers", as: :my_books_borrowers
+
+  resources :borrows, only: [] do
+    resource :rating, only: %i[new create], controller: :ratings
+  end
 end

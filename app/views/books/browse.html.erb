@@ -1,26 +1,47 @@
-<h1>Browse All Books</h1>
+<h1>Browse Books</h1>
+
+<div class="search-filter-bar">
+  <%= form_with url: browse_books_path, method: :get, local: true do |form| %>
+    <%= form.text_field :q, value: params[:q], placeholder: "Search by title or author…" %>
+    <%= form.select :genre, [["All genres", nil]] + @genres, { selected: params[:genre] }, {} %>
+    <%= form.submit "Search", class: "button button-primary" %>
+    <% if params[:q].present? || params[:genre].present? %>
+      <%= link_to "Clear", browse_books_path, class: "button button-secondary" %>
+    <% end %>
+  <% end %>
+</div>
 
 <% if @books.any? %>
   <div class="books-grid">
     <% @books.each do |book| %>
       <div class="book-card">
         <h2 class="book-title"><%= book.title %></h2>
-        <p><strong>Owner:</strong> <%= book.user.email_address %></p>
-        <% if book.user.phone_number.present? %>
-          <p><strong>Owner Phone:</strong> <%= book.user.phone_number %></p>
+        <% if book.author.present? %>
+          <p style="color: var(--secondary-text); font-size: 0.9rem; margin-bottom: 0.5rem;">by <%= book.author %></p>
         <% end %>
-        <p><strong>Status:</strong> 
-          <% if book.currently_borrowed? %>
-            Currently Borrowed
-          <% elsif book.available_for_borrowing? %>
-            Available for Borrowing
-          <% else %>
-            Not Borrowable
+
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+          <% if book.genre.present? %>
+            <span class="genre-badge"><%= book.genre %></span>
+          <% end %>
+          <% if book.condition.present? %>
+            <span class="condition-badge"><%= book.condition %></span>
+          <% end %>
+        </div>
+
+        <p style="font-size: 0.9rem; color: var(--secondary-text);">
+          <strong style="color: var(--primary-text);">Owner:</strong>
+          <%= book.user.first_name.present? ? "#{book.user.first_name} #{book.user.last_name}" : book.user.email_address %>
+          <% avg = book.user.average_rating %>
+          <% if avg %>
+            <span class="star-rating">★ <%= avg %></span>
+            <span class="rating-count">(<%= book.user.ratings_received.count %>)</span>
           <% end %>
         </p>
+
         <div class="book-actions">
           <%= link_to "View", book, class: "button button-secondary" %>
-          <%= mail_to book.user.email_address, "Contact Owner", class: "button button-secondary" %>
+          <%= mail_to book.user.email_address, "Email Owner", class: "button button-secondary" %>
           <% if book.available_for_borrowing? %>
             <%= button_to "Borrow", borrow_book_path(book), method: :post, class: "button button-primary" %>
           <% end %>
@@ -30,6 +51,10 @@
   </div>
   <%= paginate @books %>
 <% else %>
-  <p>No borrowable books available from other users right now.</p>
-  <p>Try again later, or add more of your own books so others can borrow from you.</p>
-<% end %> 
+  <p>No books found<%= " matching your search" if params[:q].present? || params[:genre].present? %>.</p>
+  <% if params[:q].present? || params[:genre].present? %>
+    <%= link_to "Clear filters", browse_books_path, class: "button button-secondary" %>
+  <% else %>
+    <p>Try again later, or add more of your own books so others can borrow from you.</p>
+  <% end %>
+<% end %>

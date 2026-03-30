@@ -5,15 +5,18 @@
     <% @borrows.each do |borrow| %>
       <div class="book-card">
         <h2 class="book-title"><%= borrow.book.title %></h2>
-        <p><strong>Owner:</strong> <%= borrow.book.user.email_address %></p>
-        <p><strong>Borrowed On:</strong> <%= borrow.borrowed_at.strftime("%B %d, %Y") %></p>
+        <% if borrow.book.author.present? %>
+          <p style="color: var(--secondary-text); font-size: 0.9rem; margin-bottom: 0.25rem;">by <%= borrow.book.author %></p>
+        <% end %>
+        <p><strong>Owner:</strong> <%= borrow.book.user.first_name.present? ? "#{borrow.book.user.first_name} #{borrow.book.user.last_name}" : borrow.book.user.email_address %></p>
+        <p><strong>Borrowed:</strong> <%= borrow.borrowed_at.strftime("%b %d, %Y") %></p>
         <% if borrow.due_at.present? %>
-          <p><strong>Due Date:</strong> <%= borrow.due_at.strftime("%B %d, %Y") %></p>
+          <p><strong>Due:</strong> <%= borrow.due_at.strftime("%b %d, %Y") %></p>
         <% end %>
         <p>
           <strong>Status:</strong>
           <% if borrow.returned_at.present? %>
-            Returned on <%= borrow.returned_at.strftime("%B %d, %Y") %>
+            <span class="status-badge status-active">Returned <%= borrow.returned_at.strftime("%b %d, %Y") %></span>
           <% elsif borrow.overdue? %>
             <span class="status-badge status-overdue">Overdue</span>
           <% elsif borrow.due_soon? %>
@@ -22,6 +25,18 @@
             Currently borrowed
           <% end %>
         </p>
+        <% if borrow.returned_at.present? && borrow.rating.nil? %>
+          <p style="margin-top: 0.5rem;">
+            <%= link_to "★ Leave a rating", new_borrow_rating_path(borrow), class: "button button-secondary" %>
+          </p>
+        <% elsif borrow.rating.present? %>
+          <p style="margin-top: 0.5rem;">
+            <span class="star-rating">★ <%= borrow.rating.stars %>/5</span>
+            <% if borrow.rating.comment.present? %>
+              <span style="color: var(--secondary-text); font-size: 0.85rem; display: block; margin-top: 0.2rem;">"<%= borrow.rating.comment %>"</span>
+            <% end %>
+          </p>
+        <% end %>
         <div class="book-actions">
           <%= link_to "View Book", borrow.book, class: "button button-secondary" %>
         </div>
@@ -30,5 +45,5 @@
   </div>
 <% else %>
   <p>You haven't borrowed any books yet.</p>
-  <%= link_to "Start borrowing", browse_books_path, class: "button button-primary" %>
+  <%= link_to "Start browsing", browse_books_path, class: "button button-primary" %>
 <% end %>
