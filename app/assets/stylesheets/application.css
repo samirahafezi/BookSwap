@@ -1,33 +1,64 @@
-/* Dark mode styles */
-body {
-    background-color: #121212;
-    color: #ffffff;
+.bg-dark {
+  background-color: #121212;
+  color: white;
 }
 
-/* Teal accents */
-a {
-    color: #00796b;
+.btn-dark {
+  background-color: #1E1E1E;
+  color: white;
+  border: 1px solid #3A3A3A;
+  transition: background-color 0.3s ease;
 }
 
-/* Sleek layout */
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.btn-dark:hover {
+  background-color: #3A3A3A;
 }
 
-/* Hamburger menu styling */
+.card {
+  background-color: #1E1E1E;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
 .hamburger {
-    display: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.hamburger span {
+  display: block;
+  width: 30px;
+  height: 4px;
+  margin: 6px auto;
+  background-color: white;
+  transition: all 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
 @media (max-width: 768px) {
-    .hamburger {
-        display: block;
-        font-size: 24px;
-        cursor: pointer;
-    }
+  .card {
+    padding: 15px;
+  }
+
+  .btn-dark {
+    width: 100%;
+  }
 }
