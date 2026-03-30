@@ -1,0 +1,51 @@
+/** Base Styles */
+body {
+    background-color: #121212; /* Dark background */
+    color: #E0E0E0; /* Light text */
+    font-family: 'Roboto', sans-serif; /* Modern typography */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+/* Teal Accents */
+a {
+    color: #009688; /* Teal links */
+}
+
+a:hover {
+    color: #00796b; /* Darker teal on hover */
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none; /* Hidden by default */
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Show hamburger on small screens */
+        cursor: pointer; /* Pointer cursor */
+    }
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #1E1E1E; /* Slightly lighter dark */
+    padding: 10px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Add transitions to buttons */
+button {
+    background-color: #009688; /* Teal button */
+    color: white; /* White text */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #00796b; /* Darker teal on hover */
+}
+
+/* Other selectors for professional styling can go here */
