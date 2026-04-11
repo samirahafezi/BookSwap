@@ -3,9 +3,16 @@
   "configurations": [
     {
       "name": "Rails (Puma)",
-      "runtimeExecutable": "bin/rails",
-      "runtimeArgs": ["server"],
-      "port": 3000
+      "runtimeExecutable": "/Users/samirahafezi/.rbenv/versions/3.4.2/bin/ruby",
+      "runtimeArgs": ["/Users/samirahafezi/Documents/CodingPractice/BookSwap/bin/rails", "server", "-b", "127.0.0.1", "-p", "3000"],
+      "port": 3000,
+      "env": {
+        "BUNDLE_GEMFILE": "/Users/samirahafezi/Documents/CodingPractice/BookSwap/Gemfile",
+        "GEM_HOME": "/Users/samirahafezi/.rbenv/versions/3.4.2/lib/ruby/gems/3.4.0",
+        "GEM_PATH": "/Users/samirahafezi/.rbenv/versions/3.4.2/lib/ruby/gems/3.4.0",
+        "RBENV_VERSION": "3.4.2",
+        "HOME": "/Users/samirahafezi"
+      }
     }
   ]
 }

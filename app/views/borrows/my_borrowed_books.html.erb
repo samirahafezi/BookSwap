@@ -1,38 +1,51 @@
 <h1>My Borrowed Books</h1>
 
 <% if @borrowed_books.any? %>
-  <div class="books-grid">
-    <% @borrowed_books.each do |book| %>
-      <% borrow = book.current_borrow %>
-      <div class="book-card">
-        <h2 class="book-title"><%= book.title %></h2>
-        <p><strong>Owner:</strong> <%= book.user.email_address %></p>
-        <% if borrow %>
-          <p><strong>Borrowed On:</strong> <%= borrow.borrowed_at.strftime("%B %d, %Y") %></p>
-          <p>
-            <strong>Due Date:</strong>
-            <% if borrow.due_at.present? %>
+  <table class="books-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Owner</th>
+        <th>Borrowed On</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @borrowed_books.each do |book| %>
+        <% borrow = book.current_borrow %>
+        <tr>
+          <td><strong><%= book.title %></strong></td>
+          <td><%= book.user.first_name %> <%= book.user.last_name %></td>
+          <td><%= borrow ? borrow.borrowed_at.strftime("%B %d, %Y") : "—" %></td>
+          <td>
+            <% if borrow&.due_at.present? %>
               <%= borrow.due_at.strftime("%B %d, %Y") %>
             <% else %>
-              No due date
+              —
             <% end %>
-          </p>
-          <% if borrow.overdue? %>
-            <p><span class="status-badge status-overdue">Overdue</span></p>
-          <% elsif borrow.due_soon? %>
-            <p><span class="status-badge status-due-soon">Due soon</span></p>
-          <% end %>
-        <% end %>
-        <div class="book-actions">
-          <%= link_to "View", book, class: "button button-secondary" %>
-          <%= form_with url: return_book_path(book), method: :post, local: true, style: "display: inline;" do |form| %>
-            <%= form.submit "Return Book", class: "button button-primary", data: { turbo_confirm: "Are you sure you want to return this book?" } %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+          </td>
+          <td>
+            <% if borrow&.overdue? %>
+              <span class="status-badge status-overdue">Overdue</span>
+            <% elsif borrow&.due_soon? %>
+              <span class="status-badge status-due-soon">Due Soon</span>
+            <% else %>
+              <span class="status-badge status-active">Active</span>
+            <% end %>
+          </td>
+          <td class="table-actions">
+            <%= link_to "View", book, class: "button button-secondary" %>
+            <%= form_with url: return_book_path(book), method: :post, local: true, style: "display: inline;" do |form| %>
+              <%= form.submit "Return", class: "button button-primary", data: { turbo_confirm: "Are you sure you want to return this book?" } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
   <p>You haven't borrowed any books yet.</p>
   <%= link_to "Browse books to borrow", browse_books_path, class: "button button-primary" %>
-<% end %> 
+<% end %>

@@ -12,35 +12,49 @@
 </head>
 <body class="dark-mode">
   <header>
-    <div class="hamburger-menu">
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
+    <div class="brand">
+      <span class="brand-name">Book Swap</span>
+      <span class="brand-tagline">Your next read is one swap away.</span>
     </div>
-    <nav class="nav-menu">
-      <ul>
-        <li><%= link_to "Home", root_path %></li>
-        <% if authenticated? %>
-          <li><%= link_to "My Books", books_path %></li>
-          <li><%= link_to "Browse", browse_books_path %></li>
-          <li><%= link_to "Profile", profile_path %></li>
-          <li><%= button_to "Sign Out", session_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to "Sign In", new_session_path %></li>
-          <li><%= link_to "Sign Up", signup_path %></li>
-        <% end %>
-      </ul>
-    </nav>
+    <div class="header-auth">
+      <% if authenticated? %>
+        <span class="current-user">Hi, <%= Current.user.first_name %></span>
+        <%= button_to "Sign Out", session_path, method: :delete, class: "btn-auth" %>
+      <% else %>
+        <%= link_to "Sign In", new_session_path, class: "btn-auth" %>
+      <% end %>
+    </div>
   </header>
-  <main>
-    <% if flash[:notice] %>
-      <p class="notice"><%= flash[:notice] %></p>
-    <% end %>
-    <% if flash[:alert] %>
-      <p class="alert"><%= flash[:alert] %></p>
-    <% end %>
-    <%= yield %>
-  </main>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><%= link_to "Home", root_path %></li>
+          <% if authenticated? %>
+            <li><%= link_to "My Books", books_path %></li>
+            <li><%= link_to "Browse", browse_books_path %></li>
+            <li><%= link_to "My Borrowed", my_borrowed_books_path %></li>
+            <li><%= link_to "My Lent Books", my_books_borrowers_path %></li>
+            <li><%= link_to "Profile", profile_path %></li>
+          <% else %>
+            <li><%= link_to "Sign Up", signup_path %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </aside>
+
+    <main>
+      <% if flash[:notice] %>
+        <p class="notice"><%= flash[:notice] %></p>
+      <% end %>
+      <% if flash[:alert] %>
+        <p class="alert"><%= flash[:alert] %></p>
+      <% end %>
+      <%= yield %>
+    </main>
+  </div>
+
   <footer>
     <p>&copy; 2026 BookSwap. All rights reserved.</p>
   </footer>
