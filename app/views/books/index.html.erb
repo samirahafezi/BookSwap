@@ -4,30 +4,46 @@
 </div>
 
 <% if @books.any? %>
-  <div class="books-grid">
-    <% @books.each do |book| %>
-      <div class="book-card">
-        <h2 class="book-title"><%= book.title %></h2>
-        <% if book.author.present? %>
-          <p style="color: var(--secondary-text); font-size: 0.9rem; margin-bottom: 0.5rem;">by <%= book.author %></p>
-        <% end %>
-        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
-          <% if book.genre.present? %>
-            <span class="genre-badge"><%= book.genre %></span>
-          <% end %>
-          <% if book.condition.present? %>
-            <span class="condition-badge"><%= book.condition %></span>
-          <% end %>
-        </div>
-        <p><strong>Status:</strong> <%= book.borrowable? ? "Borrowable" : "Not Borrowable" %></p>
-        <div class="book-actions">
-          <%= link_to "View", book, class: "button button-secondary" %>
-          <%= link_to "Edit", edit_book_path(book), class: "button button-secondary" %>
-          <%= button_to "Delete", book, method: :delete, class: "button button-secondary", form: { class: "inline-button" }, data: { turbo_confirm: "Are you sure?" } %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <table class="books-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Condition</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><strong><%= book.title %></strong></td>
+          <td><%= book.author.presence || "—" %></td>
+          <td><%= book.genre.present? ? content_tag(:span, book.genre, class: "genre-badge") : "—" %></td>
+          <td><%= book.condition.present? ? content_tag(:span, book.condition, class: "condition-badge") : "—" %></td>
+          <td>
+            <% if book.currently_borrowed? %>
+              <%= link_to "Borrowed", my_books_borrowers_path, class: "status-badge status-active", style: "text-decoration: none;" %>
+            <% elsif book.borrowable? %>
+              Borrowable
+            <% else %>
+              Not Borrowable
+            <% end %>
+          </td>
+          <td class="table-actions">
+            <%= link_to "View", book, class: "button button-secondary" %>
+            <%= link_to "Edit", edit_book_path(book), class: "button button-secondary" %>
+            <% if book.currently_borrowed? %>
+              <span class="button button-secondary" style="opacity: 0.4; cursor: not-allowed;" title="Cannot delete while borrowed">Delete</span>
+            <% else %>
+              <%= button_to "Delete", book, method: :delete, class: "button button-secondary", form: { class: "inline-button" }, data: { turbo_confirm: "Are you sure?" } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
   <%= paginate @books %>
 <% else %>
   <p>You have no books yet.</p>

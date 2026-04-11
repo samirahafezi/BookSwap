@@ -1,34 +1,43 @@
-<h1>Who Borrowed My Books</h1>
+<h1>My Lent Books</h1>
 
 <% if @borrows.any? %>
-  <div class="books-grid">
-    <% @borrows.each do |borrow| %>
-      <div class="book-card">
-        <h2 class="book-title"><%= borrow.book.title %></h2>
-        <p><strong>Borrower:</strong> <%= borrow.borrower.email_address %></p>
-        <p><strong>Borrowed On:</strong> <%= borrow.borrowed_at.strftime("%B %d, %Y") %></p>
-        <% if borrow.due_at.present? %>
-          <p><strong>Due Date:</strong> <%= borrow.due_at.strftime("%B %d, %Y") %></p>
-        <% end %>
-        <p>
-          <strong>Status:</strong>
-          <% if borrow.returned_at.present? %>
-            Returned on <%= borrow.returned_at.strftime("%B %d, %Y") %>
-          <% elsif borrow.overdue? %>
-            <span class="status-badge status-overdue">Overdue</span>
-          <% elsif borrow.due_soon? %>
-            <span class="status-badge status-due-soon">Due soon</span>
-          <% else %>
-            Currently borrowed
-          <% end %>
-        </p>
-        <div class="book-actions">
-          <%= link_to "View Book", borrow.book, class: "button button-secondary" %>
-          <%= mail_to borrow.borrower.email_address, "Contact Borrower", class: "button button-secondary" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <table class="books-table">
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th>Borrower</th>
+        <th>Borrowed On</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @borrows.each do |borrow| %>
+        <tr>
+          <td><strong><%= borrow.book.title %></strong></td>
+          <td><%= borrow.borrower.first_name %> <%= borrow.borrower.last_name %></td>
+          <td><%= borrow.borrowed_at.strftime("%B %d, %Y") %></td>
+          <td><%= borrow.due_at.present? ? borrow.due_at.strftime("%B %d, %Y") : "—" %></td>
+          <td>
+            <% if borrow.returned_at.present? %>
+              <span class="status-badge" style="background-color: var(--border); color: var(--secondary-text);">Returned <%= borrow.returned_at.strftime("%b %d") %></span>
+            <% elsif borrow.overdue? %>
+              <span class="status-badge status-overdue">Overdue</span>
+            <% elsif borrow.due_soon? %>
+              <span class="status-badge status-due-soon">Due Soon</span>
+            <% else %>
+              <span class="status-badge status-active">Active</span>
+            <% end %>
+          </td>
+          <td class="table-actions">
+            <%= link_to "View Book", borrow.book, class: "button button-secondary" %>
+            <%= mail_to borrow.borrower.email_address, "Contact", class: "button button-secondary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
   <p>No one has borrowed your books yet.</p>
   <p>Share your BookSwap profile with friends so they can start borrowing!</p>

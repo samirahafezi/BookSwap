@@ -37,8 +37,12 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book.destroy
-    redirect_to books_path
+    if @book.currently_borrowed?
+      redirect_to books_path, alert: "Cannot delete a book that is currently borrowed."
+    else
+      @book.destroy
+      redirect_to books_path
+    end
   end
 
   def browse
