@@ -13,6 +13,12 @@
         "RBENV_VERSION": "3.4.2",
         "HOME": "/Users/samirahafezi"
       }
+    },
+    {
+      "name": "cattracker-web",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "cd /Users/samirahafezi/Documents/CodingPractice/CatTracker && npx expo start --web --port 8090"],
+      "port": 8090
     }
   ]
 }

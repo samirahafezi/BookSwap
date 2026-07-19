@@ -37,6 +37,18 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to books_url
   end
 
+  test "should rate limit repeated failed login attempts" do
+    Rails.cache.clear
+
+    10.times do
+      post session_url, params: { email_address: @user.email_address, password: "wrong_password" }
+    end
+    post session_url, params: { email_address: @user.email_address, password: "wrong_password" }
+
+    assert_redirected_to new_session_url
+    assert_equal "Try again later.", flash[:alert]
+  end
+
   private
     def login_as(user)
       post session_url, params: { email_address: user.email_address, password: "password" }

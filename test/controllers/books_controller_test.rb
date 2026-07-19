@@ -30,10 +30,18 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   test "should create book when logged in" do
     login_as @user
     assert_difference("Book.count") do
-      post books_url, params: { book: { title: "New Book" } }
+      post books_url, params: { book: { title: "New Book", author: "New Author" } }
     end
     assert_redirected_to book_url(Book.last)
     assert_equal @user.id, Book.last.user_id
+  end
+
+  test "should not create book with a blank title" do
+    login_as @user
+    assert_no_difference("Book.count") do
+      post books_url, params: { book: { title: "", author: "New Author" } }
+    end
+    assert_response :unprocessable_entity
   end
 
   test "should show book when logged in as owner" do
@@ -79,6 +87,13 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "Updated Title", @other_user_book.title
   end
 
+  test "should not update book with a blank title" do
+    login_as @user
+    patch book_url(@book), params: { book: { title: "" } }
+    assert_response :unprocessable_entity
+    assert_not_equal "", @book.reload.title
+  end
+
   test "should destroy book when logged in as owner" do
     login_as @user
     assert_difference("Book.count", -1) do
@@ -94,6 +109,48 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to books_url
     assert_equal "You don't have permission to access this book.", flash[:alert]
+  end
+
+  test "should not destroy book that is currently borrowed" do
+    @book.borrows.create!(borrower: @other_user, borrowed_at: Time.current)
+    login_as @user
+
+    assert_no_difference("Book.count") do
+      delete book_url(@book)
+    end
+    assert_redirected_to books_url
+    assert_equal "Cannot delete a book that is currently borrowed.", flash[:alert]
+  end
+
+  test "browse should list borrowable books owned by other users that are not currently borrowed" do
+    login_as @user
+    get browse_books_url
+    assert_response :success
+    assert_includes @response.body, @other_user_book.title
+    assert_not_includes @response.body, @book.title
+  end
+
+  test "browse should exclude books that are currently borrowed" do
+    @other_user_book.borrows.create!(borrower: @user, borrowed_at: Time.current)
+    login_as @user
+
+    get browse_books_url
+    assert_response :success
+    assert_not_includes @response.body, @other_user_book.title
+  end
+
+  test "browse should filter by search query" do
+    login_as @user
+    get browse_books_url(q: @other_user_book.title)
+    assert_response :success
+    assert_includes @response.body, @other_user_book.title
+  end
+
+  test "browse should filter by genre" do
+    login_as @user
+    get browse_books_url(genre: @other_user_book.genre)
+    assert_response :success
+    assert_includes @response.body, @other_user_book.title
   end
 
   private

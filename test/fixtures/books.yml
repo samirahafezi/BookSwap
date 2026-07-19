@@ -2,12 +2,24 @@
 
 book_one:
   title: The Great Gatsby
+  author: F. Scott Fitzgerald
+  genre: Fiction
+  condition: Good
+  borrowable: true
   user: one
 
 book_two:
   title: 1984
+  author: George Orwell
+  genre: Science Fiction
+  condition: Good
+  borrowable: true
   user: two
 
 book_three:
   title: To Kill a Mockingbird
+  author: Harper Lee
+  genre: Fiction
+  condition: Fair
+  borrowable: true
   user: one
