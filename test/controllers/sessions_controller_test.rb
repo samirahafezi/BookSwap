@@ -38,8 +38,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should rate limit repeated failed login attempts" do
-    Rails.cache.clear
-
     10.times do
       post session_url, params: { email_address: @user.email_address, password: "wrong_password" }
     end

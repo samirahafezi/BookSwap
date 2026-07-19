@@ -27,4 +27,3 @@ class BorrowReminderJob < ApplicationJob
     end
   end
 end
-

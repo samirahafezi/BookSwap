@@ -13,4 +13,3 @@ class BorrowsMailer < ApplicationMailer
     mail to: @user.email_address, subject: "Overdue book: #{@book.title}"
   end
 end
-

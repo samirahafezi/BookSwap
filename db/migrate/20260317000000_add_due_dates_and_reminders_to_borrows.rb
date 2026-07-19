@@ -5,4 +5,3 @@ class AddDueDatesAndRemindersToBorrows < ActiveRecord::Migration[8.0]
     add_column :borrows, :overdue_reminder_sent_at, :datetime
   end
 end
-
